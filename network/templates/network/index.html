@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Home / Chirrup{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% load static %}
+        <!-- FAVICON -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'network/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'network/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'network/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'network/site.webmanifest' %}">
+        <!-- REACT FRAMEWORK -->
+        <!-- Note: when deploying, replace "development.js" with "production.min.js".
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script> -->
+        <!-- BOOTSTRAP FRAMEWORK -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!-- FONTAWESOME ICONS -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <!-- STYLES.CSS -->
+        <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <!-- CUSTOM JAVASCRIPT -->
+        <script src="{% static 'network/index.js' %}"></script>
+    </head>
+    <body class="main-body-logo">
+
+        <div id="loader">
+            <img src="{% static 'network/bird-logo.svg' %}" alt="Chirrup Logo">
+        </div>
+
+        <div class="d-flex pt-3 px-3">
+        {% if user.is_authenticated %}
+            <div class="dropdown mr-3">
+                <button class="btn btn-blue circle dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-4x"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <button class="dropdown-item" id="my-id" type="button">{{ user.id }}</button>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+                </div>
+            </div>
+        {% else %}
+            <nav class="navbar" aria-label="Login or Register">
+                <div class="navbar-nav">
+                    <h3 class="nav-item text-white mr-2">Chirrup</h3>
+                    <a class="nav-item btn btn-blue text-white mr-2" href="{% url 'login' %}">Log In</a>
+                    <a class="nav-item btn btn-blue text-white mr-2" href="{% url 'register' %}">Register</a>
+                </div>
+            </nav>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <h1 id="username" class="text-white mr-auto">{{ user.username }}</h1>
+            <button class="btn btn-blue mr-2 circle header-icon"><i class="fas fa-bell"></i></button>
+            <button class="btn btn-blue mr-2 circle header-icon"><i class="fas fa-envelope"></i></button>
+        {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+            <div class="row justify-content-center p-3">
+                <nav class="col-md-6 d-flex justify-content-center align-items-center" id="main-menu" aria-label="Following View, Public View, and Post View">
+                    <button class="btn btn-blue circle icon mr-3" id="nav-following">
+                        <i class="fas fa-users"></i>
+                    </button>
+                    <button class="btn btn-blue circle icon mr-3" id="nav-public">
+                        <i class="fas fa-home"></i>
+                    </button>
+                    <button class="btn btn-blue circle icon mr-3" id="nav-chirp">
+                        <i class="fas fa-feather-alt"></i>
+                    </button>
+                </nav>
+            </div>
+        {% endif %}
+        
+        <div class="bg-white">
+            <main class="row justify-content-center pt-5">
+                <div class="col-md-6 mt-4">
+            
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error_message }}
+                        </div>
+                    {% endif %}
+            
+                    <div id="public-view">
+                        <h2>Home</h2>
+                    </div>
+            
+                    <div id="profile-view">
+                        <h2>Profile</h2>
+                        <div class="d-flex">
+                            <div class="btn btn-blue circle align-self-start mr-2">
+                                <i class="fas fa-user-circle fa-3x"></i>
+                            </div>
+                            <div id="profile-info">
+                                <!-- Profile info generated by index.js through a JSON fetch -->
+                            </div>
+                            {% if user.is_authenticated %}
+                            <div id="toggle-follow">
+                                <!-- Follow and unfollow HTML generated by index.js through a JSON fetch -->
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+            
+                    <div id="following-view">
+                        <h2>Recent posts from people you follow</h2>
+                    </div>
+            
+                    <form id="chirp-view">
+                        {% if user.is_authenticated %}
+                            <div class="form-group">
+                                <h2><label for="chirp-textarea" class="form-label">New Post</label></h2>
+                                <textarea type="text" maxlength="280" minlength="1" rows="4" class="form-control needs-validation" id="chirp-textarea" novalidate required></textarea>
+                                <button class="btn btn-blue text-white mt-1" id="chirp-button" type="submit">Chirp</button>
+                                <div class="invalid-feedback">
+                                    chirp must be between 1 and 280 characters.
+                                </div>
+                            </div>
+                        {% endif %}
+                    </form>
+                    
+                    <!-- List items/posts generated by index.js through a JSON fetch -->
+                    <ul class="list-group list-group-flush" id="posts"></ul>
+                    <nav class="mt-4" aria-label="Page navigation" id="page-navigation">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item"><button class="page-link" id="previous" type="button">Previous</button></li>
+                            <li class="page-item"><button class="page-link" id="next" type="button">Next</button></li>
+                        </ul>
+                    </nav>
+                </div>
+            </main>
+        </div>
+    </body>
+    <!-- BOOTSTRAP JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</html>

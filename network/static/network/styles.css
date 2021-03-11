@@ -1,0 +1,183 @@
+/* -------------------------------------------------------------------------- */
+/* Force white space in the main part of application to grow to take up remainder of bottom screen  */
+/* https://stackoverflow.com/questions/147528/how-do-i-force-a-div-block-to-extend-to-the-bottom-of-a-page-even-if-it-has-no-c */
+/* -------------------------------------------------------------------------- */
+
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #323c57;
+  font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+body > * {
+  flex-shrink: 0;
+}
+
+.bg-white {
+  flex-grow: 1;
+  border-radius: 50px 50px 0 0;
+  z-index: 1;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base */
+/* -------------------------------------------------------------------------- */
+
+.main-body-logo {
+  background-image: url("logo.svg");
+  background-repeat: no-repeat;
+  background-position-y: -225px;
+  background-position-x: center;
+  background-size: 50rem;
+}
+
+.login-body-logo {
+  background-image: url("logo.svg");
+  background-repeat: no-repeat;
+  background-position-y: -200px;
+  background-position-x: -200px;
+  background-size: cover;
+}
+
+.btn-blue {
+  background-color: #1c95e2 !important;
+  cursor: pointer;
+
+}
+
+.btn-outline-blue {
+  border: 2px solid #1c95e2;
+  color: #1c95e2;
+  cursor: pointer;
+}
+
+.btn-outline-blue:hover {
+  background-color: #1c95e2 !important;
+  color: white;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.back {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.login-form {
+  z-index: 1;
+}
+
+h2 {
+  text-align: center;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Loader */
+/* -------------------------------------------------------------------------- */
+
+#loader {
+  position: absolute; 
+  height: 100vh;
+  width: 100vw;
+  background-color: #323c57;
+  z-index: 3;
+}
+
+#loader > img {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20rem;
+  height: 20rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Dropdown nav */
+/* -------------------------------------------------------------------------- */
+
+#user-id {
+  display: none;
+}
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+.dropdown > button {
+  height: 5.5rem;
+  width: 5.5rem;
+}
+
+.header-icon {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Main Menu */
+/* -------------------------------------------------------------------------- */
+
+#main-menu {
+  transform: translateY(4rem);
+  z-index: 2;
+}
+
+
+.icon {
+  filter: drop-shadow(0 7px 3px lightgrey);
+  height: 4rem;
+  width: 4rem;
+}
+
+.fas {
+  color: white;
+}
+
+.icon-background-active {
+  border: 8px solid white;
+  height: 6rem;
+  width: 6rem;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Posts */
+/* -------------------------------------------------------------------------- */
+
+.user-link {
+  cursor: pointer;
+}
+
+.user-link:hover {
+  text-decoration: underline;
+}
+
+.post-interactions > i {
+  color: lightgrey;
+  cursor: pointer;
+}
+
+.fa-comment:hover,
+.fa-share-square:hover {
+  color: #1c95e2;
+}
+
+.fa-retweet:hover,
+.fa-edit:hover {
+  color: #19BF63;
+}
+
+.fa-heart:hover {
+  color: red;
+}
+
+.liked {
+  color: red !important;
+}
